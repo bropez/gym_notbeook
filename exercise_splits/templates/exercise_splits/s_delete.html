@@ -1,0 +1,7 @@
+{% extends 'exercise_splits/base_delete.html' %}
+
+{% block title_block %}Set Delete{% endblock%}
+
+{% block return_block %}
+    {% url 'workouts:e_detail' set.exercise.id %}
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'exercise_splits/base.html' %}
+
+{% block body_block %}
+    {% block detail_name_block %}{% endblock %}
+
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+    <form action="{% block form_action_block %}" method="POST">
+        {% csrf_token %}
+        <ul>
+            {% block object_list %}{% endblock %}
+                <li>
+                    <a href="{% block objecterino_detail_block %}{% endblock %}" class="text-lg">{% block objecterino_detail_name %}{% endblock %}</a>
+                    <a href="{% block objecterino_update_block %}{% endblock %}"><i class="fa fa-reorder text-lg"></i></a>
+                    <a href="{% block objecterino_delete_block %}{% endblock %}"><i class="fa fa-tiems-circle text-lg"></i></a>
+                </li>
+            {% endfor %}
+        </ul>
+    </form>
+
+    <a 
+    href="{% block link_back_block %}{% endblock %}"
+    class="border border-blue-700 rounded-lg pb-1 px-2 bg-green-300 text-blue-900 text-lg"
+    >
+        <i class="fa fa-plus-circle text-lg"></i>
+        Create a new {% block create_new_object %}{% endblock %}
+    </a>
+{% endblock %}

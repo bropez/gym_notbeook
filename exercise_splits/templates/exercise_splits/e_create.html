@@ -1,0 +1,28 @@
+{% extends 'exercise_splits/base.html' %}
+
+{% block title_block %}Exercise Form{% endblock %}
+
+{% block body_block %}
+{% load exercise_tags %}
+Exercise Form
+<form method="POST">
+    {% csrf_token %}
+    {% for field in form.visible_fields %}
+        <label>{{ field.label_tag }}</label>
+        <div>{{ field|add_class:"w-full" }}</div>
+    {% endfor %}
+
+    {% if exercise.id %}
+        <button type="submit" class="bg-blue-400 rounded-lg px-2">Save</button>
+        <a href="{% url 'workouts:e_delete' exercise.id %}" class="bg-red-500 rounded-lg px-2">Delete</a>
+        <div>
+            <a href="{% url 'workouts:wd_detail' exercise.workout_day.id %}" class="border border-gray-500 bg-gray-500 rounded-lg px-2">Back to workout details</a>
+        </div>
+    {% else %}
+        <button type="submit" class="bg-blue-400 rounded-lg px-2">Create</button>
+        <div>
+            <a href="{% url 'workouts:wd_detail' view.kwargs.wd_id %}" class="border border-gray-500 bg-gray-500 rounded-lg px-2 my-1 text-lg">Back to your workout details</a> 
+        </div>
+    {% endif %}
+</form>
+{% endblock %}

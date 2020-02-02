@@ -1,0 +1,95 @@
+{% extends 'exercise_splits/base.html' %}
+
+{% block title_block %}Exercise Detail{% endblock %}
+
+{% block style_block %}
+<script>
+    function showMe(clicked_id) {
+        let pounds_id = "pounds" + clicked_id;
+        let pounds_thing = document.getElementById(pounds_id);
+        let poundsThingClass = pounds_thing.className;
+        
+        let rep_id = "reps" + clicked_id;
+        let rep_thing = document.getElementById(rep_id);
+        let repThingClass = rep_thing.className;
+
+        if (poundsThingClass === 'hidden') {
+            pounds_thing.className = 'block text-center';
+            rep_thing.className = 'block text-center';
+        }
+        else {
+            pounds_thing.className = 'hidden';
+            rep_thing.className = 'hidden';
+        }
+    }
+</script>
+{% endblock %}
+
+{% block body_block %}
+    {% load exercise_tags %}
+
+    {% if ex.set_set.all %}
+        <h3 class="p-1">{{ ex.exercise_name }} at {{ ex.top_weight }} on {{ ex.workout_day }}</h3>
+        <div class="w-2/4 flex mb-4">
+            <div class="w-1/2 p-2">
+            <h1 class="text-left border-b-4 border-green-300">{{ ex }} Sets</h1>
+                <ul>
+                    {% for set in ex.set_set.all %}
+                        <li class="text-center">
+                            <a href="{% url 'workouts:s_update' ex.id set.id %}" class="text-lg"><i class="fa fa-edit"></i></a>
+                            <span onclick="showMe(this.id)" id="{{ forloop.counter }}" class="text-lg">Set {{ forloop.counter }}</span>
+                            {% comment %} <a href="{% url 'workouts:s_detail' ex.id set.id forloop.counter %}" class="text-lg">Set number {{ forloop.counter }} at {{ set.weight_in_lbs }}</a> {% endcomment %}
+                            <p id="pounds{{ forloop.counter }}" class="hidden">weight: {{ set.weight_in_lbs }}lbs</p>
+                            <p id="reps{{ forloop.counter }}" class="hidden">reps: {{ set.repetitions }}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="w-1/2 p-2">
+                <h3 class="text-left border-b-4 border-green-300">{{ ex }} Details</h3>
+                <p>Bar Type: {{ ex.get_bar_type_display }}</p>
+                <p>Sets completed: {{ ex.set_set.count }}</p>
+
+                {% if ex.set_set.all %}
+                    <p>Top Weight: {{ ex|get_max_lbs }}</p>
+                {% endif %}
+                
+                <div class="my-2">
+                    <a 
+                    href="{% url 'workouts:s_create' ex.id %}"
+                    class="border border-blue-700 rounded-lg pb-1 px-2 bg-green-300 text-blue-900 text-lg"
+                    >
+                        <i class="fa fa-plus-square-o"></i>
+                        Create a new set
+                    </a>
+                </div>
+
+                <div class="my-2">
+                    <a
+                    href="{% url 'workouts:wd_detail' ex.workout_day.id %}"
+                    class="border border-gray-500 bg-gray-500 rounded-lg px-2 my-1 text-lg"
+                    >
+                        Back to workout day
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <h3>No exercises available.</h3>
+        <a 
+        href="{% url 'workouts:s_create' ex.id %}"
+        class="border border-blue-700 rounded-lg pb-1 px-2 bg-green-300 text-blue-900 text-lg"
+        >
+            <i class="fa fa-plus-square-o"></i>
+            Let's start with a new set!
+        </a>
+
+        <a
+        href="{% url 'workouts:wd_detail' ex.workout_day.id %}"
+        class="border border-gray-500 bg-gray-500 rounded-lg px-2 my-1 text-lg"
+        >
+            Back to workout day details
+        </a>
+    {% endif %}
+{% endblock %}

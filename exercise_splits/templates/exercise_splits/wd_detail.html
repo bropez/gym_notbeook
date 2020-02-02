@@ -1,0 +1,40 @@
+{% extends 'exercise_splits/base.html' %}
+
+{% block title_block %}Workout Detail{% endblock %}
+{% block style_block %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+
+{% block body_block %}
+    workoutday detail
+    <h1>{{ workoutday.workout_day }}</h1>
+
+    {% if error_message %}<p><strong>{{ error_message }}</strong</p>{% endif %}
+
+    <form action="{% url 'workouts:e_detail' workoutday.id %}" method="POST">
+    {% csrf_token %}
+        <ul>
+        {% for exercise in workoutday.exercise_set.all %}
+            <li>
+                <a href="{% url 'workouts:e_update' exercise.id %}" class="text-lg"><i class="fa fa-edit"></i></a>
+                <a href="{% url 'workouts:e_detail' exercise.id %}" class="text-lg">{{ exercise.exercise_name }}</a>
+                {% comment %} <a href="{% url 'workouts:e_delete' exercise.id %}" class="text-lg"><i class="fa fa-remove"></i></a> {% endcomment %}
+            </li>
+        {% endfor %}
+        </ul>
+    </form>
+
+    <a 
+    href="{% url 'workouts:e_create' workoutday.id %}"
+    class="border border-blue-700 rounded-lg pb-1 px-2 bg-green-300 text-blue-900 text-lg"
+    >
+        <i class="fa fa-plus-square-o"></i>
+        Create a new exercise
+    </a>
+    <a 
+    href="{% url 'workouts:index' %}"
+    class="border border-gray-500 bg-gray-500 rounded-lg px-2 my-1 text-lg"
+    >
+        Back to your workouts
+    </a>
+{% endblock %}

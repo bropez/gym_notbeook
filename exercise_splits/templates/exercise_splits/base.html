@@ -1,0 +1,16 @@
+<html>
+    <head>
+        <title>{% block title_block %}{% endblock %}</title>
+
+        {% block style_block %}{% endblock %}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    </head>
+
+    <body class="bg-blue-100">
+        <div class="h-screen flex flex-col justify-center items-center">
+            {% block body_block %}
+            {% endblock %}
+        <div>
+    </body>
+</html>

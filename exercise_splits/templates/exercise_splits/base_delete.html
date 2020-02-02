@@ -1,0 +1,15 @@
+{% extends 'exercise_splits/base.html '%}
+
+{% block body_block %}
+Its delete time
+<form method="POST">
+    {% csrf_token %}
+    <h2>Are you sure you want to delete "{{ object }}"?</h2>
+    <input 
+        class="border border-gray-800 rounded-lg px-1 text-lg"
+        type="submit"
+        value="Delete"
+    >
+    <a href="{% block return_block %}{% endblock %}" class="text-lg">Back to list</a>
+</form>
+{% endblock %}

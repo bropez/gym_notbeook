@@ -1,0 +1,10 @@
+{% extends 'exercise_splits/base.html' %}
+
+{% block title_block %}Set Detail{% endblock %}
+
+{% block body_block %}
+this is Set {{ view.kwargs.set_number }}'s details for {{ set.exercise.exercise_name }}
+
+<p>{{ set.weight_in_lbs }} lbs</p>
+<p>{{ set.repetitions }} reps</p>
+{% endblock %}

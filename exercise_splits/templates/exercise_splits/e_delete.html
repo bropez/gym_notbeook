@@ -1,0 +1,7 @@
+{% extends 'exercise_splits/base_delete.html' %}
+
+{% block title_block %}Exercise Delete{% endblock %}
+
+{% block return_block %}
+    {% url 'workouts:wd_detail' exercise.workout_day.id %}
+{% endblock %}

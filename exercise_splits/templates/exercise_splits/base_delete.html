@@ -1,15 +1,21 @@
 {% extends 'exercise_splits/base.html '%}
 
 {% block body_block %}
-Its delete time
+<h1 class="border-b-4 border-green-300">Warning: deletions cannot be undone!<h1>
 <form method="POST">
     {% csrf_token %}
     <h2>Are you sure you want to delete "{{ object }}"?</h2>
-    <input 
-        class="border border-gray-800 rounded-lg px-1 text-lg"
-        type="submit"
-        value="Delete"
-    >
-    <a href="{% block return_block %}{% endblock %}" class="text-lg">Back to list</a>
+    <div class="text-right">
+        <input 
+            class="border bg-red-500 rounded-lg px-2 text-lg"
+            type="submit"
+            value="Delete"
+        >
+        <a 
+            href="{% block return_block %}{% endblock %}" 
+            class="border border-gray-500 bg-gray-500 rounded-lg px-2 my-1 text-lg"
+        >Back to list
+        </a>
+    </div>
 </form>
 {% endblock %}

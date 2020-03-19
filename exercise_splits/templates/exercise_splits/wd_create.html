@@ -21,22 +21,31 @@
 {% endblock %}
 
 {% block body_block %}
+{% load exercise_tags %}
 <h2>Workout Day form</h2>
 <form method="POST" class="post-form">
     {% csrf_token %}
-    <p>Workout type: {{ form.workout_day}}</p>
+    <label>Workout type:</label>
+    <div>{{ form.workout_day|add_class:"w-full"}}</div>
 
-    <p>Workout Date</p>
+    <label>Workout Date</label>
     <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-    {{ form.date }}
-    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-    </div>
+        {{ form.date }}
+        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+        </div>
     </div>
 
-    <p>Preworkout scoops: {{ form.preworkout_scoops }}</p>
+    <label>Preworkout scoops:</label>
+    <div>{{ form.preworkout_scoops|add_class:"w-full" }}</div>
 
-    <button type="submit" class="save btn btn-default">Save</button>
+    <button type="submit" class="bg-blue-400 rounded-lg px-2">Save</button>
+    {% if object.id %}
+        <a href="{% url 'workouts:wd_delete' object.id %}" class="bg-red-500 rounded-lg px-2">Delete</a>
+        <div>
+            <a href="{% url 'workouts:index' %}" class="border border-gray-500 bg-gray-500 rounded-lg px-2 my-1 text-lg">Back to your workout days</a> 
+        </div>
+    {% endif %}
 </form>
 
 <script>

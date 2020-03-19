@@ -42,10 +42,10 @@
     <button type="submit" class="bg-blue-400 rounded-lg px-2">Save</button>
     {% if object.id %}
         <a href="{% url 'workouts:wd_delete' object.id %}" class="bg-red-500 rounded-lg px-2">Delete</a>
-        <div>
-            <a href="{% url 'workouts:index' %}" class="border border-gray-500 bg-gray-500 rounded-lg px-2 my-1 text-lg">Back to your workout days</a> 
-        </div>
     {% endif %}
+    <div>
+        <a href="{% url 'workouts:index' %}" class="border border-gray-500 bg-gray-500 rounded-lg px-2 my-1 text-lg">Back to your workout days</a> 
+    </div>
 </form>
 
 <script>

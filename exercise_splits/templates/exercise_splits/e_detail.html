@@ -28,6 +28,8 @@
 {% block body_block %}
     {% load exercise_tags %}
 
+    <p id="demo"></p>
+
     {% if ex.set_set.all %}
         <h3 class="p-1">{{ ex.exercise_name }} at {{ ex.top_weight }} on {{ ex.workout_day }}</h3>
         <div class="w-2/4 flex mb-4">
@@ -92,4 +94,40 @@
             Back to workout day details
         </a>
     {% endif %}
+
+    <script>
+        // TODO: create an html element to input how much time to wait
+        // TODO: make it settable for minutes and seconds
+        // Set the date we're counting down to
+        var countDown = new Date();
+        var time_to_go = 45;
+        var countDownDate = new Date(countDown.setTime(countDown.getTime() + (time_to_go * 1000)));
+        countDownDate = countDownDate.getTime();
+
+        // Update the count down every 1 second
+        var x = setInterval(function() {
+
+            // Get today's date and time
+            var now = new Date().getTime();
+                
+            // Find the distance between now and the count down date
+            var distance = countDownDate - now;
+                
+            // Time calculations for days, hours, minutes and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+            // Output the result in an element with id="demo"
+            document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+            + minutes + "m " + seconds + "s ";
+                
+            // If the count down is over, write some text 
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("demo").innerHTML = "EXPIRED";
+            }
+        }, 1000);
+    </script>
 {% endblock %}

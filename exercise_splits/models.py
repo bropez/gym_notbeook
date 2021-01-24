@@ -51,6 +51,7 @@ class Exercise(models.Model):
 class Set(models.Model):
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
     weight_in_lbs = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(1000)])
+    time_in_seconds = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(300)])
     repetitions = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(15)])
 
     def __str__(self):

@@ -13,13 +13,19 @@
         let rep_thing = document.getElementById(rep_id);
         let repThingClass = rep_thing.className;
 
+        let timer_id = "timer" + clicked_id;
+        let timer_thing = document.getElementById(timer_id);
+        let timerThingClass = timer_thing.className;
+
         if (poundsThingClass === 'hidden') {
             pounds_thing.className = 'block text-center';
             rep_thing.className = 'block text-center';
+            timer_thing.className = 'block text-center';
         }
         else {
             pounds_thing.className = 'hidden';
             rep_thing.className = 'hidden';
+            timer_thing.className = 'hidden';
         }
     }
 </script>
@@ -46,6 +52,7 @@
                             {% comment %} <a href="{% url 'workouts:s_detail' ex.id set.id forloop.counter %}" class="text-lg">Set number {{ forloop.counter }} at {{ set.weight_in_lbs }}</a> {% endcomment %}
                             <p id="pounds{{ forloop.counter }}" class="hidden">weight: {{ set.weight_in_lbs }}lbs</p>
                             <p id="reps{{ forloop.counter }}" class="hidden">reps: {{ set.repetitions }}</p>
+                            <p id="timer{{ forloop.counter }}" class="hidden">timer: {{ set.time_in_seconds }}</p>
                         </li>
                     {% endfor %}
                 </ul>
@@ -97,50 +104,4 @@
             Back to workout day details
         </a>
     {% endif %}
-
-    <script>
-        function add_time(time_to_go) {
-            // TODO: create an html element to input how much time to wait
-            // TODO: make it settable for minutes and seconds
-            // Set the date we're counting down to
-            var countDown = new Date();
-            var time_to_go = time_to_go;
-            var countDownDate = new Date(countDown.setTime(countDown.getTime() + (time_to_go * 1000)));
-            countDownDate = countDownDate.getTime();
-
-            return countDownDate;
-        }
-
-        // Update the count down every 1 second
-        function start_countdown() {
-            var time_to_go = 45;
-            var countDownDate = add_time(time_to_go);
-
-            var x = setInterval(function() {
-                // Get today's date and time
-                var now = new Date().getTime();
-                    
-                // Find the distance between now and the count down date
-                var distance = countDownDate - now;
-                    
-                // Time calculations for days, hours, minutes and seconds
-                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                    
-                // Output the result in an element with id="demo"
-                document.getElementById("demo").innerHTML = days + "d " + hours + "h "
-                + minutes + "m " + seconds + "s ";
-                    
-                // If the count down is over, write some text 
-                if (distance < 0) {
-                    clearInterval(x);
-                    document.getElementById("demo").innerHTML = "EXPIRED";
-                }
-            }, 1000);
-        }
-
-        document.getElementById("start_countdown").onclick = function() {start_countdown()};
-    </script>
 {% endblock %}
